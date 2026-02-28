@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import { webSearchAgent } from "@/lib/agents/simpleWebSearchAgent";
 
+export const dynamic = "force-dynamic";
+
 export const runtime = 'nodejs';
 
 export async function POST(req: NextRequest) {

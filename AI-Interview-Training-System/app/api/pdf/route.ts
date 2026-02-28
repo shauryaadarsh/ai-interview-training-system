@@ -3,6 +3,7 @@ import { Pinecone } from '@pinecone-database/pinecone';
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { safePdfParse } from '../../../lib/safePdfParse';
 
+export const dynamic = "force-dynamic";
 // Use Node.js runtime for PDF processing
 export const runtime = 'nodejs';
 
