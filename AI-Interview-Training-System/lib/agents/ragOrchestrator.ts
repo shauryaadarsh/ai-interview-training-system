@@ -126,11 +126,11 @@ class RAGOrchestrator {
   }
 
   // Multimodal disabled safely (no Gemini / HF image model yet)
-  async processMultimodalTranscript(
-    transcript: string,
-    _imageFile?: File,
-    background?: string
-  ): Promise<RAGResponse> {
+ async processMultimodalTranscript(
+  transcript: string,
+  imageFile?: File,
+  background?: string
+): Promise<RAGResponse> {
     console.log("Multimodal disabled — falling back to text RAG");
     return this.processTranscript(transcript, background);
   }
