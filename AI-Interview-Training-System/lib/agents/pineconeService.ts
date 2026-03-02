@@ -6,6 +6,9 @@ export interface SearchResult {
   score: number;
   metadata: any;
   source: string;
+  page?: number;
+  startPage?: number;
+  endPage?: number;
 }
 
 class PineconeService {

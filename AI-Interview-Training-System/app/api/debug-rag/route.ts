@@ -26,7 +26,7 @@ export async function GET(request: NextRequest) {
         content: r.content.substring(0, 200) + '...',
         score: r.score,
         source: r.source,
-        page: r.page
+        page: (r as any).page
       }))
     });
     
