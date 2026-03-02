@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@huggingface/inference": "^4.13.14",
     "@vercel/blob": "^2.3.0"
   }
 }

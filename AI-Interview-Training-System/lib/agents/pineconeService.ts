@@ -1,4 +1,4 @@
-```ts
+
 import { Pinecone } from '@pinecone-database/pinecone';
 import OpenAI from 'openai';
 import { safePdfParse } from '../safePdfParse';
@@ -131,4 +131,4 @@ class PineconeService {
 }
 
 export const pineconeService = new PineconeService();
-```
+
