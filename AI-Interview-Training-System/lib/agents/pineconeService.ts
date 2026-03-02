@@ -1,6 +1,4 @@
-
 import { Pinecone } from '@pinecone-database/pinecone';
-import OpenAI from 'openai';
 import { safePdfParse } from '../safePdfParse';
 
 export interface SearchResult {
@@ -8,22 +6,14 @@ export interface SearchResult {
   score: number;
   metadata: any;
   source: string;
-  page?: number;
-  startPage?: number;
-  endPage?: number;
 }
 
 class PineconeService {
   private pinecone: Pinecone | null = null;
   private indexName: string;
-  private openai: OpenAI;
 
   constructor() {
     this.indexName = process.env.PINECONE_INDEX_NAME || 'interview-docs';
-
-    this.openai = new OpenAI({
-      apiKey: process.env.OPENAI_API_KEY,
-    });
 
     if (process.env.PINECONE_API_KEY) {
       this.pinecone = new Pinecone({
@@ -36,15 +26,14 @@ class PineconeService {
   }
 
   /* ================================
-      EMBEDDING GENERATION
+      FAKE EMBEDDING (no API needed)
   =================================*/
   private async generateEmbedding(text: string): Promise<number[]> {
-    const response = await this.openai.embeddings.create({
-      model: "text-embedding-3-small",
-      input: text,
-    });
-
-    return response.data[0].embedding;
+    const vector = new Array(384).fill(0);
+    for (let i = 0; i < Math.min(text.length, 384); i++) {
+      vector[i] = text.charCodeAt(i) / 255;
+    }
+    return vector;
   }
 
   /* ================================
@@ -58,9 +47,12 @@ class PineconeService {
 
     const index = this.pinecone.index(this.indexName);
 
-    const chunks = pdfData.text.split(/\n+/).filter(c => c.length > 30);
+    // ✅ FIX: type of c declared
+    const chunks = pdfData.text
+      .split(/\n+/)
+      .filter((c: string) => c.length > 30);
 
-    const vectors = [];
+    const vectors: any[] = [];
 
     for (let i = 0; i < chunks.length; i++) {
       const embedding = await this.generateEmbedding(chunks[i]);
@@ -77,7 +69,6 @@ class PineconeService {
     }
 
     await index.upsert(vectors);
-
     return true;
   }
 
@@ -131,4 +122,3 @@ class PineconeService {
 }
 
 export const pineconeService = new PineconeService();
-
