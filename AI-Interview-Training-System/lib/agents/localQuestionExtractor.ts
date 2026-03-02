@@ -1,5 +1,4 @@
 /**
- * Local fallback question extractor when Gemini API is unavailable
  */
 
 export interface LocalExtractedQuestion {

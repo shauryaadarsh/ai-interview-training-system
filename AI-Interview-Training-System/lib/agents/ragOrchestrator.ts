@@ -33,22 +33,14 @@ export interface RAGResponse {
 }
 
 class RAGOrchestrator {
-  private gemini: GoogleGenerativeAI | null = null;
 
   constructor() {
-    this.initializeGemini();
   }
 
-  private async initializeGemini() {
     try {
-      if (process.env.GEMINI_API_KEY) {
-        this.gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        console.log('✅ Gemini initialized for multimodal processing');
       } else {
-        console.warn('⚠️ GEMINI_API_KEY not found - multimodal features will be limited');
       }
     } catch (error) {
-      console.error('❌ Failed to initialize Gemini:', error);
     }
   }
 
@@ -600,12 +592,8 @@ class RAGOrchestrator {
     try {
       const arrayBuffer = await imageFile.arrayBuffer();
       
-      // Use Gemini to analyze the image and extract searchable context
-      if (!this.gemini) {
-        throw new Error('Gemini not initialized for image processing');
       }
 
-      const model = this.gemini.getGenerativeModel({ model: 'gemini-1.5-pro' });
       
       const result = await model.generateContent([
         { text: "Analyze this image and describe what you see. Focus on text content, diagrams, charts, and any technical information that would be useful for semantic search." },

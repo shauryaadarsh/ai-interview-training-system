@@ -73,8 +73,8 @@ async function verifySetup() {
   
   // Test Gemini connection
   try {
-    const { GoogleGenerativeAI } = require('@google/generative-ai');
-    const gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+    const {  } = require('@google/generative-ai');
+    const gemini = new (process.env.GEMINI_API_KEY);
     const model = gemini.getGenerativeModel({ model: 'text-embedding-004' });
     // Just check if we can create the model (doesn't make an API call)
     console.log('✅ Gemini: API key configured');

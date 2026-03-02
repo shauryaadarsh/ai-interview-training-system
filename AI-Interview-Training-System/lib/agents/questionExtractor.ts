@@ -1,6 +1,5 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || "");
 
 export interface ExtractedQuestion {
   question: string;
@@ -10,7 +9,6 @@ export interface ExtractedQuestion {
 
 export async function extractQuestionFromTranscript(transcript: string): Promise<ExtractedQuestion | null> {
   try {
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     
     const prompt = `
 Analyze the following interview transcript and extract the most recent or important question that needs to be answered.

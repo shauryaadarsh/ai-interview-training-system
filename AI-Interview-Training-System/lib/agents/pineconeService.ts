@@ -28,7 +28,6 @@ export interface SearchResult {
 
 class PineconeService {
   private pinecone: Pinecone | null = null;
-  private gemini: GoogleGenerativeAI | null = null;
   private indexName: string;
 
   constructor() {
@@ -38,7 +37,6 @@ class PineconeService {
 
   private async initialize() {
     try {
-      console.log('🔧 Initializing Pinecone service with Gemini embeddings...');
       
       if (process.env.PINECONE_API_KEY) {
         this.pinecone = new Pinecone({
@@ -49,12 +47,7 @@ class PineconeService {
         console.warn('⚠️ PINECONE_API_KEY not found - PDF search will be disabled');
       }
 
-      if (process.env.GEMINI_API_KEY) {
-        this.gemini = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
-        console.log('✅ Gemini client initialized for embeddings');
       } else {
-        console.warn('⚠️ GEMINI_API_KEY not configured - PDF embeddings will be disabled');
-        console.warn('   Please set a valid Gemini API key in your .env file');
       }
     } catch (error) {
       console.error('Failed to initialize Pinecone service:', error);
@@ -72,9 +65,6 @@ class PineconeService {
     try {
       console.log('📄 Starting PDF upload:', file.name);
       
-      if (!this.pinecone || !this.gemini) {
-        console.error('❌ Pinecone or Gemini not initialized');
-        throw new Error('Pinecone or Gemini not initialized');
       }
 
       // Validate file type and size
@@ -109,10 +99,8 @@ class PineconeService {
       
       console.log(`📊 PDF parsed: ${pdfData.numpages} pages, ${pdfData.text.length} characters`);
 
-      // Split into chunks with page tracking (reduced size for Gemini token limits)
       const chunksWithPages = this.splitIntoChunksWithPages(pdfData, 150); // Further reduced from 200 to 150 words
       console.log(`🔗 Split into ${chunksWithPages.length} chunks with page tracking`);
-      console.log(`⚠️ Using smaller chunks (150 words) to prevent Gemini token limit errors`);
       
       // Filter out chunks that are too short or mostly whitespace
       const validChunks = chunksWithPages.filter(chunk => {
@@ -239,8 +227,6 @@ class PineconeService {
     try {
       console.log('🔍 Searching for similar content:', query);
       
-      if (!this.pinecone || !this.gemini) {
-        console.warn('⚠️ Pinecone or Gemini not initialized');
         return [];
       }
 
@@ -319,8 +305,6 @@ class PineconeService {
   }
 
   private async generateEmbedding(text: string, contentType: 'text' | 'multimodal' = 'text'): Promise<number[]> {
-    if (!this.gemini) {
-      throw new Error('Gemini not initialized');
     }
 
     try {
@@ -329,11 +313,8 @@ class PineconeService {
       const charCount = cleanedText.length;
       const wordCount = cleanedText.split(' ').length;
       
-      console.log(`🧮 Generating ${contentType} embedding using Gemini...`);
       console.log(`   Text stats: ${wordCount} words, ${charCount} characters`);
       
-      // Conservative token limit for Gemini (approximately 1 token = 4 characters)
-      const maxChars = 1500; // Conservative limit well below Gemini's actual limit
       const maxWords = 300;   // Additional word-based limit
       
       let processedText = cleanedText;
@@ -368,42 +349,31 @@ class PineconeService {
         throw new Error('Text too short for meaningful embedding');
       }
       
-      // Use Gemini's text embedding model
-      const model = this.gemini.getGenerativeModel({ 
-        model: 'text-embedding-004' // Gemini's latest embedding model
       });
 
       const result = await model.embedContent(processedText);
       
       if (!result.embedding || !result.embedding.values) {
-        throw new Error('Invalid embedding response from Gemini');
       }
 
       console.log(`✅ Generated embedding with ${result.embedding.values.length} dimensions`);
       return result.embedding.values;
       
     } catch (error) {
-      console.error('❌ Error generating Gemini embedding:', error);
       
-      // Enhanced error handling for Gemini API issues
       if (error instanceof Error) {
         if (error.message.includes('API_KEY_INVALID') || error.message.includes('API key not valid')) {
-          console.error('🔑 Invalid Gemini API Key:');
-          console.error('   Your GEMINI_API_KEY in .env.local is not valid.');
           console.error('   Please get a valid API key from: https://makersuite.google.com/app/apikey');
           console.error('   Make sure to replace the placeholder value in .env.local');
         } else if (error.message.includes('400') || error.message.includes('Bad Request')) {
-          console.error('🚫 Gemini API Request Error:');
           console.error('   Please check your API key and request parameters.');
           console.error('   Text length:', text.length, 'characters');
         } else if (error.message.includes('quota') || error.message.includes('limit') || error.message.includes('429')) {
-          console.error('📊 Gemini API Quota/Rate Limit Error:');
           console.error('   You may have exceeded your API usage limits or rate limits.');
           console.error('   Check your usage at: https://makersuite.google.com/');
           console.error('   Consider adding delays between requests or reducing chunk sizes.');
         } else if (error.message.includes('token') || error.message.includes('length')) {
           console.error('📏 Token Length Error:');
-          console.error('   Input text may be too long for Gemini API.');
           console.error('   Current text length:', text.length, 'characters');
           console.error('   Consider reducing chunk sizes further.');
         }
@@ -420,15 +390,11 @@ class PineconeService {
     text: string, 
     imageData?: ArrayBuffer
   ): Promise<number[]> {
-    if (!this.gemini) {
-      throw new Error('Gemini not initialized');
     }
 
     try {
       console.log('🖼️ Generating multimodal embedding (text + image)...');
       
-      const model = this.gemini.getGenerativeModel({ 
-        model: 'gemini-1.5-pro' // Supports multimodal
       });
 
       let content: any[] = [{ text }];
@@ -558,7 +524,6 @@ class PineconeService {
       
       // Find all chunks for this document
       const searchResponse = await index.query({
-        vector: new Array(768).fill(0), // Gemini text-embedding-004 dimensions
         topK: 10000,
         includeMetadata: true,
         filter: { filename: { $eq: filename } }

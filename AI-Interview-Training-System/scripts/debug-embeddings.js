@@ -4,7 +4,7 @@
  * Debug script to test and analyze Gemini embedding token usage
  */
 
-const { GoogleGenerativeAI } = require("@google/generative-ai");
+const {  } = require("@google/generative-ai");
 require('dotenv').config({ path: '.env.local' });
 
 async function testEmbeddingLimits() {
@@ -15,7 +15,7 @@ async function testEmbeddingLimits() {
     process.exit(1);
   }
 
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const genAI = new (process.env.GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
 
   // Test different text lengths
@@ -82,7 +82,7 @@ async function testEmbeddingLimits() {
 async function testPdfContent() {
   console.log('\n🔍 Testing with PDF-like content...\n');
   
-  const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+  const genAI = new (process.env.GEMINI_API_KEY);
   const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
 
   // Simulate problematic PDF content (lots of whitespace)
