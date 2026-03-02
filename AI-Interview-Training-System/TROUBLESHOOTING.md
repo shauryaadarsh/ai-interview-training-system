@@ -32,7 +32,7 @@ This error occurs when the Pinecone index doesn't exist. The setup script will c
 ```bash
 # Required for basic functionality
 DEEPGRAM_API_KEY="your-deepgram-api-key"
-GEMINI_API_KEY="your-gemini-api-key"
+HF_API_KEY="your-gemini-api-key"
 
 # Required for RAG features
 PINECONE_API_KEY="your-pinecone-api-key"

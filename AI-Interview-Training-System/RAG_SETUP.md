@@ -40,7 +40,7 @@ Update your `.env` file:
 
 ```env
 DEEPGRAM_API_KEY=your-deepgram-key
-GEMINI_API_KEY=your-gemini-key
+HF_API_KEY=your-gemini-key
 
 # RAG Configuration
 PINECONE_API_KEY=your-pinecone-key

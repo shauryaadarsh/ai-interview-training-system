@@ -66,7 +66,7 @@ Test with these sample transcripts that contain questions:
 ## Environment Variables Required
 
 Make sure these are set in your `.env` file:
-- `GEMINI_API_KEY`
+- `HF_API_KEY`
 - `OPENAI_API_KEY`
 - `PINECONE_API_KEY`
 - `PINECONE_ENVIRONMENT`

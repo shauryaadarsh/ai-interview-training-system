@@ -10,12 +10,12 @@ require('dotenv').config({ path: '.env.local' });
 async function testEmbeddingLimits() {
   console.log('🔍 Testing Gemini Embedding Token Limits...\n');
   
-  if (!process.env.GEMINI_API_KEY) {
-    console.error('❌ GEMINI_API_KEY not found in .env.local');
+  if (!process.env.HF_API_KEY) {
+    console.error('❌ HF_API_KEY not found in .env.local');
     process.exit(1);
   }
 
-  const genAI = new (process.env.GEMINI_API_KEY);
+  const genAI = new (process.env.HF_API_KEY);
   const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
 
   // Test different text lengths
@@ -82,7 +82,7 @@ async function testEmbeddingLimits() {
 async function testPdfContent() {
   console.log('\n🔍 Testing with PDF-like content...\n');
   
-  const genAI = new (process.env.GEMINI_API_KEY);
+  const genAI = new (process.env.HF_API_KEY);
   const model = genAI.getGenerativeModel({ model: 'text-embedding-004' });
 
   // Simulate problematic PDF content (lots of whitespace)
