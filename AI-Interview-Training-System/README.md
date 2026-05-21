@@ -1,227 +1,411 @@
-# AI Interview Copilot
+# AI Interview Assistant with RAG Pipeline
 
 <p align="center">
   <img src="https://img.shields.io/badge/build-passing-brightgreen" alt="Build Status" />
-  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License" />
-  <img src="https://img.shields.io/badge/PRs-welcome-green" alt="PRs Welcome" />
-  <img src="https://img.shields.io/badge/AI-Groq%20LLM-orange" alt="Groq LLM" />
-  <img src="https://img.shields.io/badge/Transcription-Deepgram-blueviolet" alt="Deepgram" />
+  <img src="https://img.shields.io/badge/AI-RAG%20Pipeline-orange" alt="RAG Pipeline" />
+  <img src="https://img.shields.io/badge/Frontend-Next.js-black" alt="Next.js" />
+  <img src="https://img.shields.io/badge/Backend-Node.js-green" alt="Node.js" />
+  <img src="https://img.shields.io/badge/Language-TypeScript-blue" alt="TypeScript" />
+  <img src="https://img.shields.io/badge/Deployment-Vercel-black" alt="Vercel" />
 </p>
 
 ---
 
-## Overview
+# Overview
 
-*AI Interview Copilot* is a next-generation, real-time AI-powered assistant designed to streamline and enhance the technical interview process. Built for interviewers, hiring managers, and technical recruiters, this tool leverages state-of-the-art speech-to-text, large language models (LLMs), and retrieval-augmented generation (RAG) to provide instant, context-aware support during live interviews. The Copilot transcribes interviewer audio, analyzes candidate responses, and delivers intelligent, actionable suggestions, summaries, and follow-up questions—all in a clean, professional, and minimal UI.
+AI Interview Assistant is a full-stack AI-powered interview preparation platform built using Next.js, TypeScript, vector search, and LLM APIs.
 
-<p align="center">
-  <img src="./public/prototype.png" alt="AI Interview Copilot Prototype" width="800" />
-  <br />
-  <em>AI Interview Copilot - Real-time transcription and AI-powered assistance</em>
-</p>
+The system allows users to upload PDFs such as resumes, technical notes, and interview preparation documents. It processes uploaded documents using Retrieval-Augmented Generation (RAG) architecture by generating vector embeddings and performing semantic similarity search to retrieve relevant context.
 
----
+The retrieved context is then passed to an LLM API to generate accurate, structured, and context-aware interview responses in real time.
 
-## Features
+This project focuses on:
 
-### 🎙 Real-Time Audio Transcription
-- *Deepgram Integration:* Captures and transcribes interviewer/system audio in real time using advanced speech recognition.
-- *Screen Sharing Preview:* Visual feedback for active screen/audio capture, with robust error handling and fallback logic.
-- *Speaker Labeling:* Only "Interviewer" audio is transcribed and displayed, ensuring clarity and focus.
-
-### 🤖 AI Reasoning & Response
-- *Groq LLM Integration:* Utilizes Groq's ultra-fast, high-accuracy LLMs (Llama 3) for instant reasoning, explanations, and follow-up questions.
-- *Intelligent Routing:* The system first checks if the LLM can answer from its own knowledge. If not, it automatically triggers RAG agents to fetch relevant context from documents, web, or company knowledge bases.
-- *Progressive Enhancement:* Users receive immediate AI responses, with additional sources and citations appended as soon as RAG completes, minimizing wait time.
-
-### 📚 Retrieval-Augmented Generation (RAG)
-- *Contextual Search:* When the LLM needs more information, RAG agents search internal documents, PDFs, and web sources to provide accurate, context-rich answers.
-- *Citations & Sources:* All RAG-based responses include clear, structured citations for transparency and auditability.
-
-### 📝 Minimal, Professional UI
-- *Clean Design:* No gradients, cards, or unnecessary UI elements—just a focused, distraction-free workspace.
-- *Chat-Style Transcription:* All interviewer speech is displayed in a chat interface, with clear timestamps and speaker labels.
-- *Screen Sharing:* Prominent, resizable preview for screen/audio capture, with live status indicators.
-
-### 🛡 Robustness & Security
-- *Error Handling:* Graceful fallbacks for audio/video issues, API errors, and permission denials.
-- *Environment Variables:* All API keys and sensitive configs are managed via .env files.
-- *No Candidate Audio:* Only interviewer/system audio is captured, ensuring privacy and compliance.
+* scalable backend architecture
+* semantic retrieval systems
+* modular API routing
+* low-latency AI response generation
+* vector-based semantic search
 
 ---
 
+# Features
 
-## 🚀 BlitzQ - Production SaaS Built on This Prototype
+## AI-Powered Interview Assistance
 
-Building on this open-source prototype, I created *BlitzQ* - a comprehensive SaaS platform that takes interview preparation to the next level.
+* Context-aware interview answers using RAG architecture
+* Personalized responses from uploaded documents
+* Semantic search instead of keyword matching
 
-### *Ace Every Interview with BlitzQ*
-Your intelligent AI-powered interview copilot that provides real-time answers, helps you practice, and boosts your confidence. Ace every interview and land your dream job.
+## PDF-Based Knowledge Retrieval
 
-<p align="center">
-  <img src="./public/blitzq.png" alt="BlitzQ - AI Interview Copilot SaaS" width="800" />
-  <br />
-  <em>BlitzQ - Production-ready AI interview assistance platform</em>
-</p>
+* Upload technical PDFs, resumes, and notes
+* Automatic text extraction and chunking
+* Embedding generation for semantic understanding
 
-### *Real Interview Experience*
-<p align="center">
-  <img src="./public/interview.png" alt="BlitzQ Live Interview Session" width="800" />
-  <br />
-  <em>BlitzQ in action during a live technical interview - real-time AI suggestions and contextual help</em>
-</p>
+## Vector Search Pipeline
 
-### *Practice and Examples*
-<p align="center">
-  <img src="./public/example.png" alt="BlitzQ Practice Examples" width="800" />
-  <br />
-  <em>BlitzQ's practice mode with curated interview questions and AI-generated example responses</em>
-</p>
+* High-speed vector similarity retrieval
+* Embedding-based semantic matching
+* Relevant context fetching before LLM generation
 
-*BlitzQ Features:*
-- 🎯 *Real-time AI Assistance*: Get instant, contextual answers during live interviews
-- 📚 *Smart Knowledge Base*: Access curated technical questions and best practices
-- 🎓 *Practice Mode*: Simulate interviews with AI feedback and improvement suggestions
-- 📊 *Performance Analytics*: Track your progress and identify areas for improvement
-- 🔐 *Enterprise Security*: SOC2 compliant with end-to-end encryption
-- 🌍 *Multi-language Support*: Available in 15+ languages for global candidates
+## Scalable Backend Architecture
+
+* Modular API routes using Next.js
+* Optimized retrieval pipelines
+* Asynchronous request handling
+
+## Real-Time AI Responses
+
+* Fast response generation using LLM APIs
+* Reduced latency through optimized retrieval
+* Structured and context-rich answers
 
 ---
 
+# System Architecture
 
-## System Flowchart
-
-
-```mermaid
-flowchart TD
-    A[Start Interview Session] --> B{Screen/Audio Capture}
-    B -->|Grant Permission| C[Deepgram Transcription]
-    C --> D[Transcript to Copilot UI]
-    D --> E{AI Knowledge Check}
-    E -- Known --> F[Groq LLM Immediate Response]
-    E -- Need Context --> G[RAG Agents: Docs/Web Search]
-    G --> H[Contextual Prompt to Groq LLM]
-    F & H --> I[Streamed Response to User]
-    H --> J[Show Citations/Sources]
-    I --> K[End/Export Transcript]
+```text
+User Uploads PDF
+        ↓
+PDF Text Extraction
+        ↓
+Text Chunking Pipeline
+        ↓
+Embedding Generation
+        ↓
+Vector Database Storage
+        ↓
+User Query
+        ↓
+Query Embedding Generation
+        ↓
+Semantic Similarity Search
+        ↓
+Top Relevant Chunks Retrieved
+        ↓
+LLM API
+        ↓
+AI-Generated Response
+        ↓
+Frontend Chat Interface
 ```
 
 ---
 
+# RAG Pipeline Workflow
 
-## Architecture
+## Step 1: PDF Upload
 
-- *Frontend:* Next.js, React, Tailwind CSS
-- *Audio/Video:* Web APIs for screen/audio capture, Deepgram SDK for transcription
-- *AI/LLM:* Groq SDK for Llama 3 models, with intelligent routing between LLM and RAG
-- *RAG:* Modular agents for document, PDF, and web search (Pinecone, Tavily, etc.)
-- *Backend:* API routes for streaming LLM responses, RAG orchestration, and context management
+Users upload PDFs such as:
+
+* resumes
+* interview notes
+* technical documents
+* preparation materials
+
+## Step 2: Text Extraction
+
+The backend extracts raw text from uploaded PDFs.
+
+## Step 3: Chunking
+
+Large documents are divided into smaller chunks to improve retrieval accuracy and optimize token usage.
+
+## Step 4: Embedding Generation
+
+Each chunk is converted into vector embeddings using embedding models.
+
+## Step 5: Vector Storage
+
+Embeddings and metadata are stored in a vector database for semantic retrieval.
+
+## Step 6: Semantic Retrieval
+
+User questions are converted into embeddings and matched against stored vectors using cosine similarity.
+
+## Step 7: LLM Response Generation
+
+Relevant chunks are passed to the LLM API to generate context-aware interview responses.
 
 ---
 
-## Getting Started
+# Tech Stack
 
-### 1. Clone the Repository
-bash
-git clone https://github.com/Vijaysingh1621/AI-powererd-interview-Assistant.git
-cd ai-interview-copilot
+## Frontend
 
+* Next.js
+* React.js
+* TypeScript
+* Tailwind CSS
 
-### 2. Install Dependencies
-bash
+## Backend
+
+* Node.js
+* Next.js API Routes
+* REST APIs
+
+## AI & Search Systems
+
+* Retrieval-Augmented Generation (RAG)
+* Vector Embeddings
+* Semantic Search
+* LLM APIs
+
+## Database
+
+* Vector Database
+* Embedding Storage
+* Similarity Search
+
+## Deployment & DevOps
+
+* Vercel
+* Docker
+* GitHub Actions
+
+## Tools
+
+* Git
+* GitHub
+* Postman
+* VS Code
+
+---
+
+# Backend Workflow
+
+The backend is responsible for:
+
+* PDF processing
+* embedding generation
+* vector retrieval
+* LLM communication
+* API orchestration
+
+## Backend Flow
+
+```text
+Frontend UI
+      ↓
+Next.js API Routes
+      ↓
+PDF Processing Logic
+      ↓
+Embedding APIs
+      ↓
+Vector Database
+      ↓
+LLM APIs
+      ↓
+Generated Response
+```
+
+---
+
+# Project Structure
+
+```bash
+/app
+  /api
+  /chat
+  /upload
+
+/components
+/lib
+/public
+/utils
+/hooks
+/styles
+
+```
+
+---
+
+# API Endpoints
+
+## Upload API
+
+```bash
+/api/upload
+```
+
+Handles:
+
+* PDF upload
+* text extraction
+* chunk creation
+
+## Query API
+
+```bash
+/api/query
+```
+
+Handles:
+
+* query embedding
+* vector similarity search
+* retrieval pipeline
+
+## Chat API
+
+```bash
+/api/chat
+```
+
+Handles:
+
+* LLM communication
+* answer generation
+* response streaming
+
+---
+
+# Performance Optimizations
+
+* Optimized retrieval pipelines to reduce response latency
+* Reduced unnecessary API calls
+* Improved semantic retrieval accuracy
+* Efficient chunking strategies
+* Modular backend architecture for scalability
+
+---
+
+# Installation
+
+## Clone Repository
+
+```bash
+git clone https://github.com/YOUR_USERNAME/ai-interview-assistant.git
+cd ai-interview-assistant
+```
+
+---
+
+## Install Dependencies
+
+```bash
 npm install
-# or
-yarn install
+```
 
+---
 
-### 3. Configure Environment Variables
-Copy .env.example to .env and fill in your API keys:
-bash
-cp .env.example .env
+## Configure Environment Variables
 
-- GROQ_API_KEY (Groq LLM)
-- NEXT_PUBLIC_DEEPGRAM_API_KEY (Deepgram)
-- PINECONE_API_KEY, TAVILY_API_KEY, etc. (for RAG)
+Create a `.env.local` file:
 
-### 4. Run the App
-bash
+```env
+OPENAI_API_KEY=your_api_key
+VECTOR_DB_API_KEY=your_vector_db_key
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+```
+
+---
+
+## Run Development Server
+
+```bash
 npm run dev
-# or
-yarn dev
+```
 
-Visit [http://localhost:3000](http://localhost:3000) to use the Copilot.
+Open:
 
----
-
-## Usage
-
-1. *Start Screen Sharing:* Click "Connect" to begin capturing interviewer audio and screen.
-2. *Live Transcription:* The Copilot will transcribe all interviewer speech in real time.
-3. *Ask Questions:* Type or speak interview questions; the Copilot will provide instant AI-powered suggestions and follow-ups.
-4. *Review Sources:* If the AI needs more context, sources and citations will appear after the initial response.
-5. *Export/Save:* Download or copy chat transcripts for record-keeping or feedback.
+```bash
+http://localhost:3000
+```
 
 ---
 
-## Advanced Capabilities
+# Usage
 
-- *Intelligent LLM Routing:* The Copilot uses a knowledge-check prompt to decide if the LLM can answer directly. If not, it triggers RAG for deeper context.
-- *Streaming Responses:* All AI and RAG responses are streamed for minimal latency.
-- *Customizable Models:* Easily switch between Groq, Gemini, or OpenAI by updating environment variables and config files.
-- *Extensible RAG Agents:* Add new document or web search agents by extending the RAG orchestrator.
-
----
-
-## File Structure
-
-- /app - Next.js app, API routes, and main pages
-- /components - UI components (recorder, chat, PDF manager, etc.)
-- /lib - Core logic (transcription manager, LLM/RAG clients, utils)
-- /public - Static assets
-- /scripts - Setup and utility scripts
-- /docs - Technical and integration documentation
+1. Upload a PDF document
+2. Ask interview-related questions
+3. System retrieves relevant context
+4. AI generates structured responses
+5. Receive context-aware interview assistance
 
 ---
 
-## Contributing
+# Key Learnings
 
-1. Fork the repo and create a feature branch.
-2. Make your changes with clear, well-documented code.
-3. Add/modify tests as needed.
-4. Submit a pull request with a detailed description.
-
----
-
-## Troubleshooting
-
-- *Audio/Screen Not Captured:* Ensure browser permissions are granted for screen and audio.
-- *API Errors:* Check your .env file for correct API keys and quotas.
-- *Slow Responses:* RAG-based answers may take longer; LLM-only answers are near-instant.
-- *UI Issues:* Clear browser cache or try a different browser.
+* Built end-to-end RAG pipelines
+* Understood vector embeddings and semantic retrieval
+* Implemented scalable backend architecture
+* Optimized API routing and retrieval latency
+* Integrated LLM APIs with semantic search systems
+* Learned production deployment workflows using Vercel
 
 ---
 
-## License
+# Future Improvements
 
-MIT License. See [LICENSE](./LICENSE) for details.
-
----
-
-## Acknowledgments
-
-- [Deepgram](https://deepgram.com) for real-time transcription
-- [Groq](https://groq.com) for ultra-fast LLMs
-- [Pinecone](https://pinecone.io) and [Tavily](https://tavily.com) for RAG/search
-- [Next.js](https://nextjs.org), [React](https://react.dev), and [Tailwind CSS](https://tailwindcss.com) for the frontend
+* Multi-document retrieval
+* Chat memory support
+* Streaming AI responses
+* Authentication and user sessions
+* Redis caching
+* Multi-modal document understanding
+* Real-time collaboration support
 
 ---
 
-## Contact
-Author: Vijay Singh
-📧 Email: itisvijaysingh@gmail.com
+# Challenges Faced
 
-🔗 LinkedIn: https://www.linkedin.com/in/vijay-singh-b25483288/
+## Large PDF Processing
 
-🔗 Repo: https://github.com/Vijaysingh1621/AI-powererd-interview-Assistant.git
+Handled token limitations using chunking strategies.
 
-For support, feature requests, or enterprise solutions, please contact the maintainers or open an issue on GitHub.
+## Retrieval Accuracy
+
+Improved semantic retrieval by optimizing chunk size and overlap.
+
+## API Latency
+
+Reduced response time using optimized retrieval pipelines and modular backend routing.
+
+## Context Management
+
+Managed prompt size while maintaining retrieval quality.
+
+---
+
+# Deployment
+
+The application is deployed using:
+
+* Vercel
+* Environment variable management
+* CI/CD workflows
+* Production-ready API routing
+
+---
+
+# Author
+
+## Shaurya Adarsh
+
+* Email: [shauryaadarsh2001@gmail.com](mailto:shauryaadarsh2001@gmail.com)
+* LinkedIn: [https://www.linkedin.com/](https://www.linkedin.com/)
+* GitHub: [https://github.com/](https://github.com/)
+
+Bachelor of Technology in Electronics & Instrumentation Engineering
+M S Ramaiah Institute of Technology
+
+---
+
+# License
+
+MIT License
+
+---
+
+# Acknowledgements
+
+* Next.js
+* React.js
+* Node.js
+* OpenAI APIs
+* Vector Search Concepts
+* Vercel
+* Tailwind CSS
